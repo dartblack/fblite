@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\PostRepositoryInterface;
 use App\Models\Post;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class PostRepository implements PostRepositoryInterface
@@ -46,11 +47,19 @@ class PostRepository implements PostRepositoryInterface
     public function search(?string $query = null): Paginator
     {
         $posts = Post::query();
+        $posts->with('user');
         if ($query) {
             $posts->where('title', 'like', "%$query%")
-                ->orWhere('short_desc', 'like', "%$query%");
+                ->orWhere('short_desc', 'like', "%$query%")
+                ->orWhereHas('comments', function (Builder $q) use ($query) {
+                    $q->where('text', 'like', "%$query%");
+                })
+                ->orWhereHas('user', function (Builder $q) use ($query) {
+                    $q->where('name', 'like', "%$query%")
+                        ->orWhere('email', 'like', "%$query%");
+                });
         }
-        $posts->with('user');
+
 
         return $posts->simplePaginate(14);
     }
