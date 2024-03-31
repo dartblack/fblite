@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Comment;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CommentPolicy
 {
@@ -13,7 +12,7 @@ class CommentPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +20,7 @@ class CommentPolicy
      */
     public function view(User $user, Comment $comment): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +28,7 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +36,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment): bool
     {
-        //
+        return $user->id === $comment->user_id;
     }
 
     /**
@@ -45,7 +44,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment): bool
     {
-        //
+        return $user->id === $comment->user_id;
     }
 
     /**
@@ -53,7 +52,7 @@ class CommentPolicy
      */
     public function restore(User $user, Comment $comment): bool
     {
-        //
+        return $user->id === $comment->user_id;
     }
 
     /**
@@ -61,6 +60,6 @@ class CommentPolicy
      */
     public function forceDelete(User $user, Comment $comment): bool
     {
-        //
+        return $user->id === $comment->user_id;
     }
 }

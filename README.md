@@ -1,7 +1,7 @@
 ## პროექტის გაშვება
 
 ```shell
-docker up
+docker compose up -d
 ```
 
 ```shell

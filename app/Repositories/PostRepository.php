@@ -63,4 +63,14 @@ class PostRepository implements PostRepositoryInterface
 
         return $posts->simplePaginate(14);
     }
+
+    public function userPostLikes(int $userId)
+    {
+        return Post::where('user_id', '=', $userId)->sum('likes');
+    }
+
+    public function userPostDisLikes(int $userId)
+    {
+        return Post::where('user_id', '=', $userId)->sum('disLikes');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostSearchRequest;
 use App\Services\PostService;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,9 +16,9 @@ class IndexController extends Controller
     {
     }
 
-    public function index(): Response
+    public function index(PostSearchRequest $request): Response
     {
-        $posts = $this->postService->search();
+        $posts = $this->postService->search($request->validated('query'));
         return Inertia::render('Index', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),

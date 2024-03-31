@@ -1,4 +1,5 @@
 import {Link, Head} from '@inertiajs/react';
+import Rate from "@/Components/Rate.jsx";
 
 export default function Index({auth, posts}) {
     const handleImageError = () => {
@@ -7,8 +8,6 @@ export default function Index({auth, posts}) {
         document.getElementById('docs-card-content')?.classList.add('!flex-row');
         document.getElementById('background')?.classList.add('!hidden');
     };
-
-    console.log(posts);
 
     return (
         <>
@@ -36,6 +35,8 @@ export default function Index({auth, posts}) {
                                     />
                                 </svg>
                             </div>
+
+
                             <nav className="-mx-3 flex flex-1 justify-end">
                                 {auth.user ? (
                                     <Link
@@ -61,6 +62,28 @@ export default function Index({auth, posts}) {
                                     </>
                                 )}
                             </nav>
+
+                            <form className="flex w-full max-w-[600px] rounded-full bg-[#21262c] px-2">
+                                <input type="text"
+                                       name="query"
+                                       className="flex w-full bg-[#0d1829] bg-transparent pl-2 text-[#cccccc] outline-0"
+                                       placeholder="Search name movie or select options"/>
+                                <button type="submit" className="relative rounded-full bg-[#0d1829] p-2">
+                                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                           stroke-linejoin="round"/>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                                                stroke="#999" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"/>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </form>
+
                         </header>
 
                         <main className="mt-6">
@@ -68,41 +91,49 @@ export default function Index({auth, posts}) {
                                 {posts.data.map(({
                                                      id, title, short_desc, created_at, likes, dislikes, user
                                                  }) => (
-                                    <div key={id} className="mt-4">
-                                        <h3>{title}</h3>
-                                        <small>{user.name}</small> |
-                                        <small>{new Date(created_at).toDateString()}</small>
-                                        <hr/>
-                                        <p>{short_desc}</p>
-                                        <hr/>
-                                        <p>
-                                            <span>Like: {likes} | Dislike: {dislikes}</span>
-                                            |
-                                            <Link
-                                                href={route("public.posts.show", id)}
-                                            >
-                                                View
-                                            </Link>
-                                        </p>
+                                    <div key={id} className="rounded-xl border p-5 shadow-md bg-white">
+                                        <div className="flex w-full items-center justify-between border-b pb-3">
+                                            <div className="flex items-center space-x-3">
+                                                <div className="text-lg font-bold text-slate-700">{user.name} |
+                                                    Rating: {user.rating}</div>
+                                            </div>
+                                            <div className="flex items-center space-x-8">
+                                                <div
+                                                    className="text-xs text-neutral-500">{new Date(created_at).toDateString()}</div>
+                                            </div>
+                                        </div>
 
+                                        <div className="mt-4 mb-6">
+                                            <Link href={route('public.posts.show', id)}
+                                                  className="mb-3 text-xl font-bold text-black">{title}</Link>
+                                            <div className="text-sm text-neutral-600">{short_desc}</div>
+                                        </div>
+                                        <Rate user={auth.user} id={id} like={likes} dislike={dislikes} type="post"/>
                                     </div>
+
                                 ))}
                             </div>
-                            <div>
-                                <div>
+
+
+                            <div className="flex justify-center mt-4">
+                                <nav className="flex space-x-2" aria-label="Pagination">
                                     <Link
                                         href={posts.prev_page_url}
-                                    >
-                                        Previus
+                                        className="relative inline-flex items-center px-4 py-2 text-sm bg-gradient-to-r from-violet-300 to-indigo-300 border border-fuchsia-100 hover:border-violet-100 text-white font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+
+                                        >
+                                        Previous
                                     </Link>
-                                </div>
-                                <div>
+
                                     <Link
                                         href={posts.next_page_url}
-                                    >
+                                        className="relative inline-flex items-center px-4 py-2 text-sm bg-gradient-to-r from-violet-300 to-indigo-300 border border-fuchsia-100 hover:border-violet-100 text-white font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                                        >
                                         Next
                                     </Link>
-                                </div>
+
+                                </nav>
+
                             </div>
 
                         </main>
@@ -110,6 +141,5 @@ export default function Index({auth, posts}) {
                 </div>
             </div>
         </>
-    )
-        ;
+    );
 }

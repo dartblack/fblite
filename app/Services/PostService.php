@@ -48,4 +48,15 @@ class PostService
     {
         return $this->postRepository->search($query);
     }
+
+    public function userPostLikes(int $userId)
+    {
+        return $this->postRepository->userPostLikes($userId);
+    }
+
+    public function userPostDisLikes(int $userId)
+    {
+        return $this->postRepository->userPostDisLikes($userId);
+    }
+
 }
