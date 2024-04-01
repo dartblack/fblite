@@ -21,19 +21,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
-        $this->app->bind(PostService::class, function ($app) {
-            return new PostService($app->make(PostRepositoryInterface::class));
-        });
-
         $this->app->bind(CommentRepositoryInterface::class, CommentRepository::class);
-        $this->app->bind(CommentService::class, function ($app) {
-            return new CommentService($app->make(CommentRepositoryInterface::class));
-        });
-
         $this->app->bind(RankRepositoryInterface::class, RankRepository::class);
-        $this->app->bind(RankService::class, function ($app) {
-            return new RankService($app->make(RankRepositoryInterface::class));
-        });
     }
 
     /**

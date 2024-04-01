@@ -3,12 +3,12 @@
 namespace App\Services;
 
 
-use App\Repositories\CommentRepository;
+use App\Interfaces\CommentRepositoryInterface;
 
 class CommentService
 {
     public function __construct(
-        protected CommentRepository $commentRepository
+        protected CommentRepositoryInterface $commentRepository
     )
     {
     }

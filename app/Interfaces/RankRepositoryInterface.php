@@ -2,9 +2,6 @@
 
 namespace App\Interfaces;
 
-
-use App\Models\Rank;
-
 interface RankRepositoryInterface
 {
     public function create(array $data);

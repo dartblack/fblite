@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Repositories\RankRepository;
+use App\Interfaces\RankRepositoryInterface;
 
 class RankService
 {
     public function __construct(
-        protected RankRepository $rankRepository,
+        protected RankRepositoryInterface $rankRepository,
     )
     {
     }

@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Repositories\PostRepository;
+use App\Interfaces\PostRepositoryInterface;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class PostService
 {
     public function __construct(
-        protected PostRepository $postRepository
+        protected PostRepositoryInterface $postRepository
     )
     {
     }
