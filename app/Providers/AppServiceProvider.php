@@ -8,9 +8,6 @@ use App\Interfaces\RankRepositoryInterface;
 use App\Repositories\CommentRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\RankRepository;
-use App\Services\CommentService;
-use App\Services\PostService;
-use App\Services\RankService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
